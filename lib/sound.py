@@ -24,6 +24,10 @@ class Sound:
     def __duration(self):
         return self.__end - self.__start
 
+    def feature_extraction(self):
+        """Extract the features of this sample"""
+        pass
+
     def load(self):
         """
         Load the sample and retun the vector representing the sample and his sample rate
