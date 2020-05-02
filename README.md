@@ -8,3 +8,7 @@ Docs are in `html\lib\index.html`
 # Run
 Simply run the `main.py` by executing
 ```python main.py```
+
+# Documentation
+Generate documentation running:
+```pdoc --html lib --force```

@@ -28,7 +28,7 @@
 from lib.sound import Sound
 
 
-class TrainingSet:
+class SoundClass:
     name = &#34;&#34;
     &#34;&#34;&#34;Name of the class of sound&#34;&#34;&#34;
 
@@ -77,7 +77,7 @@ class Metadata:
 
         Returns
         -------
-            List of lib.metadata.TrainingSet
+            List of lib.metadata.SoundClass
 
         &#34;&#34;&#34;
         selected_rows = [ row for row in self.__metadata if row[&#39;fold&#39;] != str(exclude_folder)]
@@ -85,7 +85,7 @@ class Metadata:
         def getClass(cls):
             positive = list(map(lambda x: Sound(x), [row for row in selected_rows if row[&#39;class&#39;] == cls]))
             negative = list(map(lambda x: Sound(x), [row for row in selected_rows if row[&#39;class&#39;] != cls]))
-            return TrainingSet(cls,positive,negative)
+            return SoundClass(cls,positive,negative)
 
         return list(map(lambda c: getClass(c),self.classes()))
 
@@ -162,7 +162,7 @@ class Metadata:
 
         Returns
         -------
-            List of lib.metadata.TrainingSet
+            List of lib.metadata.SoundClass
 
         &#34;&#34;&#34;
         selected_rows = [ row for row in self.__metadata if row[&#39;fold&#39;] != str(exclude_folder)]
@@ -170,7 +170,7 @@ class Metadata:
         def getClass(cls):
             positive = list(map(lambda x: Sound(x), [row for row in selected_rows if row[&#39;class&#39;] == cls]))
             negative = list(map(lambda x: Sound(x), [row for row in selected_rows if row[&#39;class&#39;] != cls]))
-            return TrainingSet(cls,positive,negative)
+            return SoundClass(cls,positive,negative)
 
         return list(map(lambda c: getClass(c),self.classes()))
 
@@ -263,7 +263,7 @@ Sound are encapsulated in a convenience class Sound</p>
 <p>exculde_folder: int
 folder to exclude for this training set</p>
 <h2 id="returns">Returns</h2>
-<pre><code>List of lib.metadata.TrainingSet
+<pre><code>List of lib.metadata.SoundClass
 </code></pre></section>
 <details class="source">
 <summary>
@@ -283,7 +283,7 @@ folder to exclude for this training set</p>
 
     Returns
     -------
-        List of lib.metadata.TrainingSet
+        List of lib.metadata.SoundClass
 
     &#34;&#34;&#34;
     selected_rows = [ row for row in self.__metadata if row[&#39;fold&#39;] != str(exclude_folder)]
@@ -291,15 +291,15 @@ folder to exclude for this training set</p>
     def getClass(cls):
         positive = list(map(lambda x: Sound(x), [row for row in selected_rows if row[&#39;class&#39;] == cls]))
         negative = list(map(lambda x: Sound(x), [row for row in selected_rows if row[&#39;class&#39;] != cls]))
-        return TrainingSet(cls,positive,negative)
+        return SoundClass(cls,positive,negative)
 
     return list(map(lambda c: getClass(c),self.classes()))</code></pre>
 </details>
 </dd>
 </dl>
 </dd>
-<dt id="lib.metadata.TrainingSet"><code class="flex name class">
-<span>class <span class="ident">TrainingSet</span></span>
+<dt id="lib.metadata.SoundClass"><code class="flex name class">
+<span>class <span class="ident">SoundClass</span></span>
 <span>(</span><span>name, positive, negative)</span>
 </code></dt>
 <dd>
@@ -308,7 +308,7 @@ folder to exclude for this training set</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class TrainingSet:
+<pre><code class="python">class SoundClass:
     name = &#34;&#34;
     &#34;&#34;&#34;Name of the class of sound&#34;&#34;&#34;
 
@@ -331,16 +331,16 @@ folder to exclude for this training set</p>
 </details>
 <h3>Class variables</h3>
 <dl>
-<dt id="lib.metadata.TrainingSet.name"><code class="name">var <span class="ident">name</span></code></dt>
+<dt id="lib.metadata.SoundClass.name"><code class="name">var <span class="ident">name</span></code></dt>
 <dd>
 <section class="desc"><p>Name of the class of sound</p></section>
 </dd>
-<dt id="lib.metadata.TrainingSet.negative"><code class="name">var <span class="ident">negative</span></code></dt>
+<dt id="lib.metadata.SoundClass.negative"><code class="name">var <span class="ident">negative</span></code></dt>
 <dd>
 <section class="desc"><p>Negative cases of this class in the dataset
 List of lib.sound.Sound</p></section>
 </dd>
-<dt id="lib.metadata.TrainingSet.positive"><code class="name">var <span class="ident">positive</span></code></dt>
+<dt id="lib.metadata.SoundClass.positive"><code class="name">var <span class="ident">positive</span></code></dt>
 <dd>
 <section class="desc"><p>Positive cases of this class in the dataset.
 List of lib.sound.Sound</p></section>
@@ -372,11 +372,11 @@ List of lib.sound.Sound</p></section>
 </ul>
 </li>
 <li>
-<h4><code><a title="lib.metadata.TrainingSet" href="#lib.metadata.TrainingSet">TrainingSet</a></code></h4>
+<h4><code><a title="lib.metadata.SoundClass" href="#lib.metadata.SoundClass">SoundClass</a></code></h4>
 <ul class="">
-<li><code><a title="lib.metadata.TrainingSet.name" href="#lib.metadata.TrainingSet.name">name</a></code></li>
-<li><code><a title="lib.metadata.TrainingSet.negative" href="#lib.metadata.TrainingSet.negative">negative</a></code></li>
-<li><code><a title="lib.metadata.TrainingSet.positive" href="#lib.metadata.TrainingSet.positive">positive</a></code></li>
+<li><code><a title="lib.metadata.SoundClass.name" href="#lib.metadata.SoundClass.name">name</a></code></li>
+<li><code><a title="lib.metadata.SoundClass.negative" href="#lib.metadata.SoundClass.negative">negative</a></code></li>
+<li><code><a title="lib.metadata.SoundClass.positive" href="#lib.metadata.SoundClass.positive">positive</a></code></li>
 </ul>
 </li>
 </ul>

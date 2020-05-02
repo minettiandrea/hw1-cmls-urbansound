@@ -25,6 +25,7 @@
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">import librosa
+import numpy as np
 
 class Sound:
 
@@ -50,6 +51,12 @@ class Sound:
     def __duration(self):
         return self.__end - self.__start
 
+    def feature_extraction(self):
+        &#34;&#34;&#34;Extract the features of this sample&#34;&#34;&#34;
+        y, sr = self.load()
+        mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = 13)
+        return np.mean(mfcc_matrix, axis=1)
+
     def load(self):
         &#34;&#34;&#34;
         Load the sample and retun the vector representing the sample and his sample rate
@@ -62,7 +69,10 @@ class Sound:
         sr   : number &gt; 0 [scalar]
             sampling rate of `y`
         &#34;&#34;&#34;
-        return librosa.load(self.__file, sr=None) #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt</code></pre>
+        #print(self.__file)
+
+        #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt
+        return librosa.load(self.__file, sr=None) </code></pre>
 </details>
 </section>
 <section>
@@ -108,6 +118,12 @@ class Sound:
     def __duration(self):
         return self.__end - self.__start
 
+    def feature_extraction(self):
+        &#34;&#34;&#34;Extract the features of this sample&#34;&#34;&#34;
+        y, sr = self.load()
+        mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = 13)
+        return np.mean(mfcc_matrix, axis=1)
+
     def load(self):
         &#34;&#34;&#34;
         Load the sample and retun the vector representing the sample and his sample rate
@@ -120,7 +136,10 @@ class Sound:
         sr   : number &gt; 0 [scalar]
             sampling rate of `y`
         &#34;&#34;&#34;
-        return librosa.load(self.__file, sr=None) #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt</code></pre>
+        #print(self.__file)
+
+        #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt
+        return librosa.load(self.__file, sr=None) </code></pre>
 </details>
 <h3>Class variables</h3>
 <dl>
@@ -131,6 +150,22 @@ class Sound:
 </dl>
 <h3>Methods</h3>
 <dl>
+<dt id="lib.sound.Sound.feature_extraction"><code class="name flex">
+<span>def <span class="ident">feature_extraction</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Extract the features of this sample</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def feature_extraction(self):
+    &#34;&#34;&#34;Extract the features of this sample&#34;&#34;&#34;
+    y, sr = self.load()
+    mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = 13)
+    return np.mean(mfcc_matrix, axis=1)</code></pre>
+</details>
+</dd>
 <dt id="lib.sound.Sound.load"><code class="name flex">
 <span>def <span class="ident">load</span></span>(<span>self)</span>
 </code></dt>
@@ -161,7 +196,10 @@ class Sound:
     sr   : number &gt; 0 [scalar]
         sampling rate of `y`
     &#34;&#34;&#34;
-    return librosa.load(self.__file, sr=None) #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt</code></pre>
+    #print(self.__file)
+
+    #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt
+    return librosa.load(self.__file, sr=None) </code></pre>
 </details>
 </dd>
 </dl>
@@ -185,6 +223,7 @@ class Sound:
 <li>
 <h4><code><a title="lib.sound.Sound" href="#lib.sound.Sound">Sound</a></code></h4>
 <ul class="">
+<li><code><a title="lib.sound.Sound.feature_extraction" href="#lib.sound.Sound.feature_extraction">feature_extraction</a></code></li>
 <li><code><a title="lib.sound.Sound.load" href="#lib.sound.Sound.load">load</a></code></li>
 <li><code><a title="lib.sound.Sound.sound_class" href="#lib.sound.Sound.sound_class">sound_class</a></code></li>
 </ul>
