@@ -3,7 +3,7 @@ import csv
 from lib.sound import Sound
 
 
-class TrainingSet:
+class SoundClass:
     name = ""
     """Name of the class of sound"""
 
@@ -52,7 +52,7 @@ class Metadata:
 
         Returns
         -------
-            List of lib.metadata.TrainingSet
+            List of lib.metadata.SoundClass
 
         """
         selected_rows = [ row for row in self.__metadata if row['fold'] != str(exclude_folder)]
@@ -60,7 +60,7 @@ class Metadata:
         def getClass(cls):
             positive = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] == cls]))
             negative = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] != cls]))
-            return TrainingSet(cls,positive,negative)
+            return SoundClass(cls,positive,negative)
 
         return list(map(lambda c: getClass(c),self.classes()))
 

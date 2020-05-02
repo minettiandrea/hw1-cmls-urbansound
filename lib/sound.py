@@ -1,4 +1,5 @@
 import librosa
+import numpy as np
 
 class Sound:
 
@@ -26,7 +27,9 @@ class Sound:
 
     def feature_extraction(self):
         """Extract the features of this sample"""
-        pass
+        y, sr = self.load()
+        mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = 13)
+        return np.mean(mfcc_matrix, axis=1)
 
     def load(self):
         """
@@ -40,4 +43,7 @@ class Sound:
         sr   : number > 0 [scalar]
             sampling rate of `y`
         """
-        return librosa.load(self.__file, sr=None) #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt
+        #print(self.__file)
+
+        #No need to cut, they are alredy cutted from the original file, see UrbanSound8K_README.txt
+        return librosa.load(self.__file, sr=None) 
