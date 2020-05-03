@@ -67,7 +67,7 @@ class Metadata:
 
     def test_set(self, folder: int):
         """
-        Extract the sounds for a given folder.
+        Extract the test set from the selected folder.
         Useful for testing set
 
         Parameters
@@ -77,11 +77,17 @@ class Metadata:
 
         Returns
         -------
-            [lib.sound.Sound]
+            List of lib.metadata.SoundClass
         
         """
         selected_rows =[ row for row in self.__metadata if row['fold'] == str(folder)]
-        return list(map(lambda x: Sound(x), selected_rows))
+
+        def getClass(cls):
+            positive = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] == cls]))
+            negative = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] != cls]))
+            return SoundClass(cls,positive,negative)
+
+        return list(map(lambda c: getClass(c),self.classes()))
 
     def classes(self):
         """
