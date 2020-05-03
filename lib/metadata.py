@@ -1,7 +1,8 @@
 
 import csv
 from lib.sound import Sound
-
+from joblib import Parallel, delayed
+from tqdm import tqdm   #to monitor loops during computation
 
 class SoundClass:
     name = ""
@@ -36,7 +37,14 @@ class Metadata:
         with open(path, newline='') as metadatacsv:
             reader = csv.DictReader(metadatacsv)
             for row in reader:
-                self.__metadata.append(row)
+                self.__metadata.append(Sound(row))
+
+    def calculate_all_features(self):
+        def process(s:Sound):
+            s.feature_extraction()
+        
+        # n_jobs=1 means: use all available cores
+        Parallel(n_jobs=-1, backend='threading', verbose=10)(delayed(process)(node) for node in self.__metadata)
     
     def train_set(self, exclude_folder: int):
         """
@@ -55,11 +63,11 @@ class Metadata:
             List of lib.metadata.SoundClass
 
         """
-        selected_rows = [ row for row in self.__metadata if row['fold'] != str(exclude_folder)]
+        selected_rows = [ row for row in self.__metadata if row.folder != str(exclude_folder)]
         
         def getClass(cls):
-            positive = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] == cls]))
-            negative = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] != cls]))
+            positive = [row for row in selected_rows if row.sound_class == cls]
+            negative = [row for row in selected_rows if row.sound_class != cls]
             return SoundClass(cls,positive,negative)
 
         return list(map(lambda c: getClass(c),self.classes()))
@@ -80,11 +88,11 @@ class Metadata:
             List of lib.metadata.SoundClass
         
         """
-        selected_rows =[ row for row in self.__metadata if row['fold'] == str(folder)]
+        selected_rows =[ row for row in self.__metadata if row.folder == str(folder)]
 
         def getClass(cls):
-            positive = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] == cls]))
-            negative = list(map(lambda x: Sound(x), [row for row in selected_rows if row['class'] != cls]))
+            positive = [row for row in selected_rows if row.sound_class == cls]
+            negative = [row for row in selected_rows if row.sound_class != cls]
             return SoundClass(cls,positive,negative)
 
         return list(map(lambda c: getClass(c),self.classes()))
@@ -93,4 +101,4 @@ class Metadata:
         """
         Return the set of classes present in metadata
         """
-        return set(map(lambda x: x['class'], self.__metadata))
+        return set(map(lambda x: x.sound_class, self.__metadata))

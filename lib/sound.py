@@ -6,13 +6,18 @@ class Sound:
     sound_class = ""
     """Class of the current sound"""
 
+    folder = None
+
     __file = ""
     __start = 0.0
     __end = 0.0
 
+    features = None
+
     def __init__(self,row):
         self.__file = "UrbanSound8K/audio/fold" + row['fold'] + "/" + row['slice_file_name']
         self.sound_class = row['class']
+        self.folder = row['fold']
         self.__start = float(row['start'])
         self.__end = float(row['end']) 
 
@@ -27,9 +32,12 @@ class Sound:
 
     def feature_extraction(self):
         """Extract the features of this sample"""
+        if self.features is not None:
+            return self.features
         y, sr = self.load()
         mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = 13)
-        return np.mean(mfcc_matrix, axis=1)
+        self.features = np.mean(mfcc_matrix, axis=1)
+        return self.features
 
     def load(self):
         """
