@@ -1,6 +1,24 @@
 import librosa
 import numpy as np
 
+class FeatureExtractionParameters:
+    hop_length:int
+    n_mfcc:int
+
+    def __init__(self,hop_length=None, n_mfcc=None):
+        self.hop_length = hop_length or 1024
+        self.n_mfcc = n_mfcc or 13
+        pass
+
+    def __eq__(self, other):
+        if other is None:
+            return False
+        return self.hop_length == other.hop_length and self.n_mfcc == other.n_mfcc
+
+    def __str__(self):
+        return "hop length:" + self.hop_length + " n_mfcc:" + self.n_mfcc
+
+
 class Sound:
 
     sound_class = ""
@@ -12,7 +30,8 @@ class Sound:
     __start = 0.0
     __end = 0.0
 
-    features = None
+    __features_params = None
+    __features = None
 
     def __init__(self,row):
         self.__file = "UrbanSound8K/audio/fold" + row['fold'] + "/" + row['slice_file_name']
@@ -30,14 +49,15 @@ class Sound:
     def __duration(self):
         return self.__end - self.__start
 
-    def feature_extraction(self):
+    def feature_extraction(self, params:FeatureExtractionParameters):
         """Extract the features of this sample"""
-        if self.features is not None:
-            return self.features
+        if self.__features is not None and self.__features_params == params:
+            return self.__features
+        self.__features_params == params
         y, sr = self.load()
-        mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = 13)
-        self.features = np.mean(mfcc_matrix, axis=1)
-        return self.features
+        mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = params.n_mfcc, hop_length=params.hop_length)
+        self.__features = np.mean(mfcc_matrix, axis=1)
+        return self.__features
 
     def load(self):
         """

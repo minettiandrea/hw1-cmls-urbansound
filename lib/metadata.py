@@ -1,6 +1,6 @@
 
 import csv
-from lib.sound import Sound
+from lib.sound import Sound, FeatureExtractionParameters
 from joblib import Parallel, delayed
 from tqdm import tqdm   #to monitor loops during computation
 
@@ -39,9 +39,9 @@ class Metadata:
             for row in reader:
                 self.__metadata.append(Sound(row))
 
-    def calculate_all_features(self):
+    def calculate_all_features(self,params:FeatureExtractionParameters):
         def process(s:Sound):
-            s.feature_extraction()
+            s.feature_extraction(params)
         
         # n_jobs=1 means: use all available cores
         Parallel(n_jobs=-1, backend='threading', verbose=10)(delayed(process)(node) for node in self.__metadata)
