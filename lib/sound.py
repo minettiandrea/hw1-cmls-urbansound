@@ -52,8 +52,9 @@ class Sound:
     def feature_extraction(self, params:FeatureExtractionParameters):
         """Extract the features of this sample"""
         if self.__features is not None and self.__features_params == params:
+            print('existing')
             return self.__features
-        self.__features_params == params
+        self.__features_params = params
         y, sr = self.load()
         mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = params.n_mfcc, hop_length=params.hop_length)
         self.__features = np.mean(mfcc_matrix, axis=1)

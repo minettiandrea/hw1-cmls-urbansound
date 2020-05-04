@@ -35,7 +35,7 @@ def main():
 
             #extract features for each sound that belong to class c
             def forEachClass(c: SoundClass): 
-                return np.array(list(map(lambda s: s.feature_extraction(params), c.positive))) 
+                return np.array(list(map(lambda s: s.feature_extraction(params), tqdm(c.positive)))) 
 
             X_train = np.array(list(map(forEachClass, train_set)))    #extract the training set features
             X_train = np.concatenate(X_train, axis=0)
