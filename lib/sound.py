@@ -16,7 +16,7 @@ class FeatureExtractionParameters:
         return self.hop_length == other.hop_length and self.n_mfcc == other.n_mfcc
 
     def __str__(self):
-        return "hop length:" + self.hop_length + " n_mfcc:" + self.n_mfcc
+        return "hop length:" + str(self.hop_length) + " n_mfcc:" + str(self.n_mfcc)
 
 
 class Sound:
