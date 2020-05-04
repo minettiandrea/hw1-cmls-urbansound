@@ -64,7 +64,7 @@ def main():
             print(f'\nAccuracy: {acc}')
 
             skplt.metrics.plot_confusion_matrix(y_test, predictions)   #compute the confusion matrix
-            plt.savefig('runs/'+run_id+'_folder_'+str(folder)+'_hs_'+params.hop_length+'_mfcc_'+params.n_mfcc+'.png')
+            plt.savefig('runs/'+run_id+'_folder_'+str(folder)+'_hs_'+str(params.hop_length)+'_mfcc_'+str(params.n_mfcc)+'.png')
 
         for folder in range(1, 10):
             run_folder(folder)
