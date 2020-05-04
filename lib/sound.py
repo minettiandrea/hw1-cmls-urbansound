@@ -52,7 +52,6 @@ class Sound:
     def feature_extraction(self, params:FeatureExtractionParameters):
         """Extract the features of this sample"""
         if self.__features is not None and self.__features_params == params:
-            print('existing')
             return self.__features
         self.__features_params = params
         y, sr = self.load()
