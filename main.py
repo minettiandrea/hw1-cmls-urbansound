@@ -35,7 +35,7 @@ def main():
 
             #extract features for each sound that belong to class c
             def forEachClass(c: SoundClass): 
-                return np.array(list(map(lambda s: s.feature_extraction(), c.positive))) 
+                return np.array(list(map(lambda s: s.feature_extraction(params), c.positive))) 
 
             X_train = np.array(list(map(forEachClass, train_set)))    #extract the training set features
             X_train = np.concatenate(X_train, axis=0)
@@ -60,7 +60,7 @@ def main():
             #model = skl.neural_network.MLPClassifier()
 
             acc = skl.metrics.accuracy_score(y_test, predictions)      #compute the accuracy
-            accuracies.append({"name": str(param), "acc": acc, "folder": folder})
+            accuracies.append({"name": str(params), "acc": acc, "folder": folder})
             print(f'\nAccuracy: {acc}')
 
             skplt.metrics.plot_confusion_matrix(y_test, predictions)   #compute the confusion matrix
