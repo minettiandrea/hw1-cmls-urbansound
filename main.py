@@ -20,7 +20,7 @@ def main():
     accuracies = []
 
     fe_params = []
-    for i in range(10,25,3):
+    for i in range(20,35,5):
         for j in [512,1024,2048]:
             fe_params.append(FeatureExtractionParameters(hop_length=j,n_mfcc=i))
 
@@ -74,7 +74,7 @@ def main():
 
     with open('runs/'+run_id + '.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(['Folder','Accuracy'])
+        writer.writerow(['Folder','Name','Accuracy'])
         for acc in accuracies:
             writer.writerow([acc['folder'],acc['name'],acc['acc']])
 
