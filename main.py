@@ -36,12 +36,14 @@ def main():
     for i in [0.01, 0.1, 1.0, 10, 100]:
         for j in [0.0001, 0.001, 0.01, 0.1, 1.0, 'scale', 'auto']:
             model_params.append(ModelParameters(C=i, gamma=j))
+
+    fe_params = FeatureExtractionParameters(hop_length=1024, n_mfcc=25)
+
+    metadata.calculate_all_features(fe_params) 
     
     def run_for_params(model_p:ModelParameters):
         
-        fe_params = FeatureExtractionParameters(hop_length=1024, n_mfcc=25)
-
-        metadata.calculate_all_features(fe_params) 
+        
 
         model = skl.svm.SVC(C=model_p.C, gamma=model_p.gamma) 
 
@@ -85,8 +87,7 @@ def main():
         for folder in range(1, 11):
             run_folder(folder)
 
-    for model_p in model_params:
-        run_for_params(model_p)
+    Parallel(n_jobs=-1, backend='threading', verbose=10)(delayed(run_for_params)(node) for node in model_params)
 
     with open('runs/'+run_id + '.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile)
