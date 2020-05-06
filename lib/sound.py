@@ -67,7 +67,7 @@ class Sound:
         SB = librosa.feature.spectral_bandwidth(y=y, sr=sr)
         #Root Mean Square
         RMS = librosa.feature.rms(y=y)
-        #self.__features = np.mean(mfcc_matrix, axis=1)
+        #Saving all the features
         self.__features = np.concatenate((np.mean(mfcc_matrix, axis=1), np.mean(chroma_matrix, axis=1), np.mean(ZCR, axis=1), np.mean(SC, axis=1), np.mean(SB, axis=1), np.mean(RMS, axis=1)), axis=0)
         return self.__features
 

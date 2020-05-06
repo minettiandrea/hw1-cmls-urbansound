@@ -14,16 +14,9 @@ class SoundClass:
     List of lib.sound.Sound
     """
 
-    negative = []
-    """
-    Negative cases of this class in the dataset
-    List of lib.sound.Sound
-    """
-
-    def __init__(self,name,positive,negative):
+    def __init__(self,name,positive):
         self.name = name
         self.positive = positive
-        self.negative = negative
 
 class Metadata:
 
@@ -67,8 +60,7 @@ class Metadata:
         
         def getClass(cls):
             positive = [row for row in selected_rows if row.sound_class == cls]
-            negative = [row for row in selected_rows if row.sound_class != cls]
-            return SoundClass(cls,positive,negative)
+            return SoundClass(cls,positive)
 
         return list(map(lambda c: getClass(c),self.classes()))
 
@@ -92,8 +84,7 @@ class Metadata:
 
         def getClass(cls):
             positive = [row for row in selected_rows if row.sound_class == cls]
-            negative = [row for row in selected_rows if row.sound_class != cls]
-            return SoundClass(cls,positive,negative)
+            return SoundClass(cls,positive)
 
         return list(map(lambda c: getClass(c),self.classes()))
 
