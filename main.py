@@ -80,9 +80,13 @@ def main():
             acc = skl.metrics.accuracy_score(y_test, predictions)      #compute the accuracy
             accuracies.append({"name": str(model_p), "acc": acc, "folder": folder})
             print(f'\nAccuracy: {acc}')
-
-            skplt.metrics.plot_confusion_matrix(y_test, predictions)   #compute the confusion matrix
-            plt.savefig('runs/'+run_id+'_folder_'+str(folder)+'_hs_'+str(model_p.C)+'_mfcc_'+str(model_p.gamma)+'.png')
+    
+            try:
+                skplt.metrics.plot_confusion_matrix(y_test, predictions)   #compute the confusion matrix
+                plt.savefig('runs/'+run_id+'_folder_'+str(folder)+'_hs_'+str(model_p.C)+'_mfcc_'+str(model_p.gamma)+'.png')
+            except (RuntimeError, TypeError, NameError,ValueError):
+                pass
+            
 
         for folder in range(1, 11):
             run_folder(folder)
