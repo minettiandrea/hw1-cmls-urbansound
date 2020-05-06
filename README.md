@@ -12,3 +12,14 @@ Simply run the `main.py` by executing
 # Documentation
 Generate documentation running:
 ```pdoc --html lib --force```
+
+
+```
+mount -t tmpfs -o rw,size=20G tmpfs /mnt/ramdisk
+cd /mnt/ramdisk
+wget wget https://zenodo.org/record/1203745/files/UrbanSound8K.tar.gz
+tar xzf UrbanSound8K.tar.gz
+git clone https://github.com/minettiandrea/hw1-cmls-urbansound.git
+cd hw1-cmls-urbansound
+mv ../UrbanSound8K ./
+```
