@@ -34,7 +34,7 @@ def main():
 
     model_params = []
     for i in [0.01, 0.1, 1.0, 10, 100]:
-        for j in [0.0001, 0.001, 0.01, 0.1, 1.0]:
+        for j in [0.0001, 0.001, 0.01, 0.1, 1.0, 'scale', 'auto']:
             model_params.append(ModelParameters(C=i, gamma=j))
     
     def run_for_params(model_p:ModelParameters):
