@@ -55,8 +55,20 @@ class Sound:
             return self.__features
         self.__features_params = params
         y, sr = self.load()
+        #MFCCS
         mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = params.n_mfcc, hop_length=params.hop_length)
-        self.__features = np.mean(mfcc_matrix, axis=1)
+        #Chroma features
+        chroma_matrix = librosa.feature.chroma_stft(y=y, sr=sr)
+        #Zero Crossing Rate
+        ZCR = librosa.feature.zero_crossing_rate(y=y)
+        #Spectral Centroid
+        SC = librosa.feature.spectral_centroid(y=y, sr=sr)
+        #Spectral Bandwidth
+        SB = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+        #Root Mean Square
+        RMS = librosa.feature.rms(y=y)
+        #self.__features = np.mean(mfcc_matrix, axis=1)
+        self.__features = np.concatenate((np.mean(mfcc_matrix, axis=1), np.mean(chroma_matrix, axis=1), np.mean(ZCR, axis=1), np.mean(SC, axis=1), np.mean(SB, axis=1), np.mean(RMS, axis=1)), axis=0)
         return self.__features
 
     def load(self):
