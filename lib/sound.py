@@ -56,7 +56,21 @@ class Sound:
         self.__features_params = params
         y, sr = self.load()
         #MFCCS
-        mfcc_matrix = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = params.n_mfcc, hop_length=params.hop_length)
+        mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc = params.n_mfcc, hop_length=params.hop_length)
+        #MFCCS delta
+        feature_matrix = mfcc
+        # Delta coefficients
+        mfcc_delta = librosa.feature.delta(mfcc)
+        # Add Delta Coefficients to feature matrix
+        feature_matrix = numpy.vstack((feature_matrix))
+        # Acceleration coefficients (aka delta delta)
+        mfcc_delta2 = librosa.feature.delta(mfcc, order=2)
+        # Add Acceleration Coefficients to feature matrix
+        feature_matrix = numpy.vstack((feature_matrix, mfcc_delta2))
+        # Omit mfcc0
+        feature_matrix = feature_matrix[1:, :]
+        mfcc_matrix = feature_matrix.T
+        
         #Chroma features
         chroma_matrix = librosa.feature.chroma_stft(y=y, sr=sr)
         #Zero Crossing Rate
