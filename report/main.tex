@@ -1,0 +1,155 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\usepackage{biblatex}
+\usepackage{listings}
+\usepackage{comment}
+\addbibresource{references.bib}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\urlstyle{same}
+
+\title{CMLS Homework 1 - Assignment 4 - Audio Event Classification}
+\author{10751302 - 10727803 - 10455526 - 10723074}
+\date{2nd Sem. A.A. 2019/2020}
+
+\usepackage{graphicx}
+
+\DeclareCiteCommand{\cite}{}{}{}{}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,                  
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+%"mystyle" code listing set
+\lstset{style=mystyle}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+The assignment that has been provided to our group for the CMLS subject is a Classifier that works on a specific dataset that contains recordings from some urban sound, such as air conditioner, car horn, jack hammer and others. The idea is to implement a classifier that automatically recognises these specific sounds, placed in casual order.
+
+The workflow is basically a Supervised Machine Learning classification: we own a metadata file in which are collected both Features and Targets. The metadata file will be our features data table or data model. The aim is to feed the data to a training algorithm that builds a data model. In our case we use al classifier because we are interested to classify data into categories, while a regressor would insteas be used for numerical variables (not our case).
+As every basic Machine Learning algotithm we are called to use the two API's Fit (model training) and Predict (given some inputs, compute a likely acceptable output).
+
+The dataset used is the URBANSOUND8k dataset, a dataset from an open source project, free to download, made available for academic/research purposes. This dataset contains:
+\begin{itemize}
+  \item 8732 labeled sound excerpts with a lenght $<= 4s$
+  \item a metadata file, called UrbanSound8k.csv that contains meta-data information about every audio file in the dataset.
+\end{itemize}
+The sound excerpts are taken from www.freesound.org and are already pre-sorted into ten folds for cross-validation.The link of the dataset is available in the references list at the page bottom.
+
+\section{Workflow}
+Basically what we need to do is to have a look first at the aim of the project and then to the dataset provided, in order to have a better idea of what we have to work on.
+The audio data has been already excerpted and even allocated to 10 different folders. Looking into the documentation we discover that some of the excerpts are from the same original file but different sliced.
+After a brief overview we discover that this dataset is barely unbalanced, in particular car\_horn, gun\_shot which have a bit less than half amount of entries compared to other 8 classes.
+
+We then had to choose a proper feature extraction method. In order to do so we researched the net some good options suitable for our work.
+\begin{itemize}
+  \item An interesting GitHub repository containing script for Sound Classification using Librosa, ffmpeg, CNN, Keras, XGBoost and Random Forest. \hyperlink{https://github.com/ravising-h/Urbansound8k}{Open this resource}
+  \item We had a read to a not so easy but greatly working Sound Classificator called GMM. \hyperlink{https://towardsdatascience.com/gaussian-mixture-modelling-gmm-833c88587c7f}{Open this resource}
+  \item Another interesting GitHub repository that contains 3D-CNN+RNN implementation for bird audio detection and recognition. \hyperlink{https://github.com/himaivan/BAD2}{Open this resource}
+\end{itemize}
+
+After these readings we decided to use \emph{MFCC Extraction}, a powerful feature contained into the \emph{LIBROSA} Python package, a package specificatally defeloped for sound, music and audio analysis.
+
+
+
+\begin{comment}
+
+Machine Learning with Python
+https://scikit-learn.org/stable/index.html
+https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
+
+Feature MFCC
+https://librosa.github.io/librosa/generated/librosa.feature.mfcc.html
+Block scheme MFCC
+
+
+The work is semplified because we are using only samples that are already perfectly cutted. We are not doing event detection, so we are not interested on where the sample starts or stops. That's way we computed an averaging between windowing of the samples samples. We are going to get only 13 coefficents for each audio.
+
+How we structured the data looking on
+https://github.com/tthustla/urban_sound_classification
+
+
+The reference documentations we have read before compiling our work (sent
+By Soroush and others)
+
+
+The file sample is like that, the samples are already categorized, just made the recognition of the samples, we tryed with different parameters. Witch feature are we using at the end?
+
+
+Into the main() we created a run_id that automatocally give a file namename to the confusion matrix of that specific run. All our run CM are into the run folder.
+Right after we open the metadata file and we organize all the data contained. And after the feature estraction of the parameters are set we calculate all the features of all the files. We decided to put this set of instruction at the beginning of the code because are the most expensive in terms of CPU computation.
+
+Into the run_folder(folder) funcion we get the training set and the data set for every folder with a recursive behaviour.
+
+
+Then we defined and trained the model and computed the accurancy as every machine learning algorithm tells us.
+
+Feature calculation
+Into the sound.py file we find the feature_estraction() function. Here we compute in order:
+	- MFCC Estractrion, using the parameters passed by FeatureEstractionParameters
+	- Chroma Features
+	- Zero Crossing Rate
+	- Spectral Centroid and Bandwidth
+	- Root Main Square 
+And we concatened everything into an array that will contain all the features listed above.
+
+Use of Mean Value
+Considered that these features are exctracted every time frame, we
+
+The work is semplified because we are using only samples that are already perfectly cutted. We are not doing event detection, so we are not interested on where the sample starts or stops. That's way we computed an averaging between windowing of the samples samples. We compute than the Mean of these features. The aim is to get 13 coefficients of MFCC, but without averaging we would have get 13 coefficients for every time frame, that is computationally expensive and particularly unuseful.
+
+\end{comment}
+
+\section{Improvements}
+% 54,6% varying mfcc's hop lenght
+% 60% accurancy adding chroma features ecc...
+% SVM parameters
+
+%multithread computation
+\begin{lstlisting} [language = Python]
+    def calculate_all_features(self,params:FeatureExtractionParameters):
+        def process(s:Sound):
+            s.feature_extraction(params)
+        
+        # n_jobs=1 means: use all available cores
+        Parallel(n_jobs=-1, backend='threading', verbose=10)(delayed(process)(node) for node in self.__metadata)
+\end{lstlisting}
+
+
+\section{Conclusion}
+%write conclusions
+
+
+\cite{urbansound}
+%\cite{}
+%\cite{}
+%\cite{}
+%\cite{}
+
+\printbibliography
+
+\end{document}
