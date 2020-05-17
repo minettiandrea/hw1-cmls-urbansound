@@ -22,15 +22,17 @@ class Metadata:
 
     __metadata = []
 
-    def __init__(self,path: str):
-        self.__load(path)
+    def __init__(self,path: str,limit = -1):
+        self.__load(path,limit)
 
     #load metadata from CSV, call it before any other methods
-    def __load(self, path):
+    def __load(self, path, limit):
         with open(path, newline='') as metadatacsv:
             reader = csv.DictReader(metadatacsv)
             for row in reader:
-                self.__metadata.append(Sound(row))
+                s = Sound(row)
+                if limit == -1 or len(list(filter(lambda x: x.folder == s.folder and x.sound_class == s.sound_class,self.__metadata))) < limit:
+                    self.__metadata.append(s)
 
     def calculate_all_features(self,params:FeatureExtractionParameters):
         def process(s:Sound):
