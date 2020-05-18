@@ -10,6 +10,8 @@ Simply run the `main.py` by executing
 ```python main.py```
 
 # Documentation
+Full Report available into  `Group 18 - Homework 1 Paper.pdf`
+
 Generate documentation running:
 ```pdoc --html lib --force```
 
