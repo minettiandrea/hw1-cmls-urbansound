@@ -3,12 +3,13 @@ Classification system able to classify audio events in the [Urbansound 8k](https
 
 Classifier used: **Support Vector Machine**
 
-Features: ..* **MFCC**
-          ..* **Chroma Features**
-          ..* **Zero Crossing Rate**
-          ..* **Spectral Centroid**
-          ..* **Spectral Bandwidth**
-          ..* **Root Mean Square**
+Features: 
+- **MFCC**
+- **Chroma Features**
+- **Zero Crossing Rate**
+- **Spectral Centroid**
+- **Spectral Bandwidth**
+- **Root Mean Square**
 
 ## Run
 In order to run the project copy the directory `UrbanSound8K` in the root directory.
