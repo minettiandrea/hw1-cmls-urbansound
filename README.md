@@ -1,27 +1,20 @@
-# HW 1 CMLM - URBANSOUND
+# HW 1 CMLS - URBANSOUND8k CLASSIFICATION SYSTEM
+Classification system able to classify audio events in the [Urbansound 8k](https://urbansounddataset.weebly.com/urbansound8k.html) dataset.
 
-In order to run the project copy the directory `UrbanSound8K` in the root directory
+Classifier used: **Support Vector Machine**
 
-# Docs
-Docs are in `html\lib\index.html`
+Features: + **MFCC**
+          + **Chroma Features**
+          + **Zero Crossing Rate**
+          + **Spectral Centroid**
+          + **Spectral Bandwidth**
+          + **Root Mean Square**
 
-# Run
-Simply run the `main.py` by executing
+## Run
+In order to run the project copy the directory `UrbanSound8K` in the root directory.
+
+Run the `main.py` by executing
 ```python main.py```
 
-# Documentation
+## Documentation
 Full Report available into  `Group 18 - Homework 1 Paper.pdf`
-
-Generate documentation running:
-```pdoc --html lib --force```
-
-
-```
-mount -t tmpfs -o rw,size=20G tmpfs /mnt/ramdisk
-cd /mnt/ramdisk
-wget wget https://zenodo.org/record/1203745/files/UrbanSound8K.tar.gz
-tar xzf UrbanSound8K.tar.gz
-git clone https://github.com/minettiandrea/hw1-cmls-urbansound.git
-cd hw1-cmls-urbansound
-mv ../UrbanSound8K ./
-```
